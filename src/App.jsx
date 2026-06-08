@@ -1,9 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
 import Watchlist from "./Pages/Watchlist";
 import MovieDetails from "./Pages/MovieDetails";
-
+import WatchlistProvider from "./context/WatchListContext";
 function App() {
   return (
     <BrowserRouter>

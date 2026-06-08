@@ -4,7 +4,7 @@ import {
   useState,
 } from "react";
 
-import { supabase } from "../Services/supabase";
+import { supabase } from "../services/supabase";
 
 export const WatchlistContext =
   createContext();
