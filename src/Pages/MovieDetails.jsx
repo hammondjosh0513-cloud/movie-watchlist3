@@ -11,7 +11,7 @@ import {
 
 import { getMovieDetails } from "../services/movieApi";
 
-import { WatchlistContext } from "../context/WatchlistContext";
+import WatchlistProvider from "./context/WatchListContext"
 
 function MovieDetails() {
   const { id } = useParams();
