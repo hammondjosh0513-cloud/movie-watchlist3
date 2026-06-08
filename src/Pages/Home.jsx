@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPopularMovies } from "../Services/movieApi";
 import { searchMovies } from "../Services/movieApi";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "../Components/MovieCard";
 
 function Home() {
   const [movies, setMovies] =

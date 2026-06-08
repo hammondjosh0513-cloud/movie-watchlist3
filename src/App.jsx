@@ -3,6 +3,7 @@ import Home from "./Pages/Home";
 import Watchlist from "./Pages/Watchlist";
 import MovieDetails from "./Pages/MovieDetails";
 import WatchlistProvider from "./context/WatchListContext";
+
 function App() {
   return (
     <BrowserRouter>
