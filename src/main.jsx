@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
-import WatchlistProvider from "./context/WatchListContext";
+import WatchListContext from "./context/WatchListContext";
 
 ReactDOM.createRoot(
   document.getElementById("root")

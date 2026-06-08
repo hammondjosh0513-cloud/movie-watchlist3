@@ -2,7 +2,7 @@ import Navbar from "./Components/Navbar";
 import Home from "./Pages/Home";
 import Watchlist from "./Pages/Watchlist";
 import MovieDetails from "./Pages/MovieDetails";
-import WatchlistProvider from "./context/WatchListContext";
+import WatchListContext from "./context/WatchListContext";
 
 function App() {
   return (
