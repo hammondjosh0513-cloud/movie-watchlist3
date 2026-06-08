@@ -9,7 +9,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import { getMovieDetails } from "../services/movieApi";
+import { getMovieDetails } from "../Services/movieApi";
 
 import WatchlistProvider from "./context/WatchListContext"
 

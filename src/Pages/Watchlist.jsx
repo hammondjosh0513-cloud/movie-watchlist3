@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { WatchlistContext } from "../context/WatchlistContext";
+import { WatchlistContext } from "../context/WatchListContext";
 import MovieCard from "../components/MovieCard";
 
 function Watchlist() {
