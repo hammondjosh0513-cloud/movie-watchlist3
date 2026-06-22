@@ -44,3 +44,20 @@ export const getMovieDetails = async (id) => {
     return null;
   }
 };
+
+export const getSimilarMovies = async (id) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}`
+    );
+
+    return response.data.results;
+  } catch (error) {
+    console.log(
+      "Similar movies error:",
+      error
+    );
+
+    return [];
+  }
+};

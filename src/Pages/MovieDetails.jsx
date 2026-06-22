@@ -1,3 +1,10 @@
+import MovieCard from "../Components/MovieCard";
+
+import {
+  getMovieDetails,
+  getSimilarMovies,
+} from "../Services/movieApi";
+
 import {
   useEffect,
   useState,
@@ -6,21 +13,18 @@ import {
 
 import {
   useParams,
-  useNavigate,
 } from "react-router-dom";
 
-import { getMovieDetails } from "../Services/movieApi";
-
-import { WatchListContext } from "../context/WatchListContext";
+import { WatchlistContext } from "../context/WatchListContext";
 
 function MovieDetails() {
   const { id } = useParams();
 
-  const navigate =
-    useNavigate();
-
   const [movie, setMovie] =
     useState(null);
+
+  const [similarMovies, setSimilarMovies] =
+    useState([]);
 
   const {
     watchlist,
@@ -36,6 +40,13 @@ function MovieDetails() {
         await getMovieDetails(id);
 
       setMovie(data);
+
+      const similar =
+        await getSimilarMovies(id);
+
+      setSimilarMovies(
+        similar.slice(0, 8)
+      );
     };
 
     fetchMovie();
@@ -57,77 +68,90 @@ function MovieDetails() {
     );
 
   return (
-    <div className="p-6">
-      <button
-        onClick={() =>
-          navigate(-1)
-        }
-        className="bg-gray-500 text-white px-4 py-2 rounded mb-4 cursor-pointer"
-      >
-        Back
-      </button>
-
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
-        className="w-64 rounded mb-4 block"
-      />
-
-      <h1 className="text-3xl font-bold">
-        {movie.title}
-      </h1>
-
-      <p>
-        Release Date:{" "}
-        {movie.release_date}
-      </p>
-
-      <p>
-        Runtime: {movie.runtime} mins
-      </p>
-
-      <p>
-        ⭐{" "}
-        {movie.vote_average?.toFixed(
-          1
-        )}
-      </p>
-
-      <button
-        onClick={async () => {
-          if (
-            isInWatchlist
-          ) {
-            await removeFromWatchlist(
-              movie.id
-            );
-          } else {
-            await addToWatchlist(
-              movie
-            );
-          }
+    <div className="bg-black min-h-screen text-white">
+      <div
+        className="min-h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
         }}
-        className="bg-blue-500 text-white px-4 py-2 rounded mt-4 cursor-pointer block"
       >
-        {isInWatchlist
-          ? "Remove From Watchlist"
-          : "Add To Watchlist"}
-      </button>
+        <div className="min-h-screen bg-black/60 flex items-center">
+          <div className="max-w-3xl px-12">
+            <h1 className="text-6xl font-bold mb-4">
+              {movie.title}
+            </h1>
 
-      <p className="mt-4">
-        Genres:{" "}
-        {movie.genres
-          .map(
-            (genre) =>
-              genre.name
-          )
-          .join(", ")}
-      </p>
+            <div className="flex gap-6 mb-4 text-lg">
+              <span>
+                ⭐ {movie.vote_average?.toFixed(1)}
+              </span>
 
-      <p className="mt-4">
-        {movie.overview}
-      </p>
+              <span>
+                {movie.release_date}
+              </span>
+
+              <span>
+                {movie.runtime} mins
+              </span>
+            </div>
+
+            <p className="text-lg mb-6">
+              {movie.overview}
+            </p>
+
+            <div className="flex gap-4">
+              <button className="bg-white text-black px-8 py-3 rounded font-bold">
+                ▶ Play
+              </button>
+
+           <button
+  onClick={async () => {
+    if (isInWatchlist) {
+      await removeFromWatchlist(movie.id);
+    } else {
+      await addToWatchlist(movie);
+    }
+  }}
+  className="bg-red-600 px-8 py-3 rounded font-bold"
+>
+                {isInWatchlist
+                  ? "Remove From Watchlist"
+                  : "Add To Watchlist"}
+              </button>
+            </div>
+
+            <p className="mt-6">
+              Genres:{" "}
+              {movie.genres
+                .map(
+                  (genre) =>
+                    genre.name
+                )
+                .join(", ")}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-12 py-8">
+        <h2 className="text-3xl font-bold mb-6">
+          More Like This
+        </h2>
+
+       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {similarMovies.map(
+            (movie) => (
+            <div key={movie.id}>
+                <MovieCard
+                  movie={movie}
+                />
+              </div>
+            )
+          )}
+        </div>
+      </div>
     </div>
+    
   );
 }
 
